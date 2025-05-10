@@ -89,7 +89,7 @@ const notifyMail = async () => {
                         }
                         if (method === 'sms' || method === 'both') {
                             await sendSMS(
-                                '+94783490305', // or baby.guardian.phone if you want dynamic
+                                '+94712964786', // or baby.guardian.phone if you want dynamic
                                 'Dear Parent,\n\nYour child has a vaccination appointment tomorrow.'
                             );
                             console.log(`SMS sent to guardian ${baby.guardian.phone} about ${baby.name}`);
