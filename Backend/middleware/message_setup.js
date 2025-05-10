@@ -1,12 +1,9 @@
 const twilio = require('twilio');
 
-// Load environment variables (if not already loaded elsewhere)
-require('dotenv').config();
-
-// Initialize Twilio client with credentials from environment variables
+// Initialize Twilio client with direct credentials
 const client = new twilio(
-    process.env.TWILIO_ACCOUNT_SID,
-    process.env.TWILIO_AUTH_TOKEN
+    'ACee3ef80af15de4261f8bb7023bdab056',
+    '644f11eec36824c37f74194c15f2de08'
 );
 
 // Track successful SMS deliveries
@@ -19,7 +16,7 @@ const validatePhoneNumber = (phoneNumber) => {
     
     // Check if the number starts with '94' (Sri Lanka country code)
     if (cleaned.startsWith('94')) {
-        return `+${cleaned}`;s
+        return `+${cleaned}`;
     }
     
     // If number starts with '0', replace with '94'
