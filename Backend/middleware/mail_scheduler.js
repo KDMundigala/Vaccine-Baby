@@ -89,8 +89,8 @@ const notifyMail = async () => {
                         }
                         if (method === 'sms' || method === 'both') {
                             await sendSMS(
-                                '+94712964786', // or baby.guardian.phone if you want dynamic
-                                'Dear Parent,\n\nYour child has a vaccination appointment tomorrow.'
+                                '+94783490305', // or baby.guardian.phone if you want dynamic
+                                `Dear Parent,\n\nWe would like to remind you that your child's vaccination appointment is scheduled for tomorrow.\n\nWe kindly request you to ensure your presence and bring your little one for these essential checkups. Your commitment to their health is greatly appreciated.\n\nThank you for being proactive in ensuring your child's well-being.\n\nBest regards,\n`
                             );
                             console.log(`SMS sent to guardian ${baby.guardian.phone} about ${baby.name}`);
                         }
@@ -109,7 +109,7 @@ const notifyMail = async () => {
 };
 
 
-cron.schedule('45 01 * * *', async () => {
+cron.schedule('30 09 * * *', async () => {
     console.log('Running scheduled notifications...');
     try {
         await notifyMail();

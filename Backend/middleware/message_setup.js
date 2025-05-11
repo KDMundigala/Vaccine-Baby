@@ -2,8 +2,8 @@ const twilio = require('twilio');
 
 // Initialize Twilio client with direct credentials
 const client = new twilio(
-    'ACd70d5f18d5fa78620b299ba1e3037bd5',
-    '80295e6ce29999b0f0e33cdc46cc17da'
+    'ACd5521eeaaa1f0350708973f7314e0110',
+    'aed18e878356bdee94b062389b2551ff'
 );
 
 // Track successful SMS deliveries
@@ -71,7 +71,7 @@ const sendSMS = async (to, message) => {
         // Send message
         const result = await client.messages.create({
             body: message,
-            from: '+12707139861',
+            from: '+16205539118',
             to: formattedNumber
         });
 
