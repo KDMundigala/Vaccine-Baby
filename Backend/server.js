@@ -77,7 +77,7 @@ app.use('/api/babies', babyRoutes);
 // app.use('/api/auth', authRoutes);
 
 // MongoDB Connection
-const mongoURI = "mongodb+srv://BabyDB:BabyWorld@babydb.56oasq6.mongodb.net/?retryWrites=true&w=majority&appName=BabyDB";
+const mongoURI = process.env.MONGO_URI;
 
 mongoose.connect(mongoURI)
   .then(() => console.log('MongoDB connected'))
