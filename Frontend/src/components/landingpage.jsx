@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo } from 'react';
+import React, { useState, useCallback, useMemo, useEffect, useRef } from 'react';
 import { 
   Box, 
   Container, 
@@ -151,6 +151,9 @@ const VaccineBabyLanding = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [direction, setDirection] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
+  const [autoSwitch, setAutoSwitch] = useState(true); // Auto-switching state
+  const autoSwitchTimerRef = useRef(null);
+  const pauseTimerRef = useRef(false);
   const x = useMotionValue(0);
   const y = useMotionValue(0);
 
@@ -225,10 +228,41 @@ const VaccineBabyLanding = () => {
   const headline1 = useMemo(() => currentContent.headline1.split(" "), [currentContent.headline1]);
   const headline2 = useMemo(() => currentContent.headline2.split(" "), [currentContent.headline2]);
 
+  // Auto-switching logic
+  useEffect(() => {
+    if (autoSwitch && !pauseTimerRef.current) {
+      autoSwitchTimerRef.current = setTimeout(() => {
+        // Calculate next page with wrapping
+        const nextPage = (currentPage + 1) % landingPages.length;
+        setDirection(1); // Always move forward
+        setCurrentPage(nextPage);
+      }, 5000); // 5-second interval for auto-switching
+    }
+
+    return () => {
+      if (autoSwitchTimerRef.current) {
+        clearTimeout(autoSwitchTimerRef.current);
+      }
+    };
+  }, [currentPage, autoSwitch, pauseTimerRef.current]);
+
   // Optimized page transition handler with useCallback
   const handlePageTransition = useCallback((pageIndex) => {
+    // Temporarily pause auto-switching when manually changing slides
+    pauseTimerRef.current = true;
+    
+    // Clear any existing timer
+    if (autoSwitchTimerRef.current) {
+      clearTimeout(autoSwitchTimerRef.current);
+    }
+    
     setDirection(pageIndex > currentPage ? 1 : -1);
     setCurrentPage(pageIndex);
+    
+    // Resume auto-switching after a short delay
+    setTimeout(() => {
+      pauseTimerRef.current = false;
+    }, 1000); // 1-second pause after manual interaction
   }, [currentPage]);
 
   // Optimized button click handler with useCallback
@@ -262,13 +296,29 @@ const VaccineBabyLanding = () => {
     });
   }, [x, y]);
 
+  // Handler for mouse enter - pause auto-switching
+  const handleMouseEnter = useCallback(() => {
+    pauseTimerRef.current = true;
+    setIsHovered(true);
+  }, []);
+
+  // Handler for mouse leave - resume auto-switching
+  const handleMouseLeave = useCallback(() => {
+    pauseTimerRef.current = false;
+    setIsHovered(false);
+  }, []);
+
   // Optimized transform calculations with lower sensitivity for smoother motion
   const rotateX = useTransform(y, [0, window.innerHeight], [-5, 5]); // Reduced range from -10,10 to -5,5
   const rotateY = useTransform(x, [0, window.innerWidth], [5, -5]);  // Reduced range from 10,-10 to 5,-5
 
   return (
     <ThemeProvider theme={theme}>
-      <LandingContainer onMouseMove={handleMouseMove}>
+      <LandingContainer 
+        onMouseMove={handleMouseMove}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+      >
         {/* Slide Indicators */}
         <SlideIndicatorsContainer>
           {landingPages.map((_, index) => (
