@@ -44,14 +44,15 @@ const Chat = () => {
     }
 
     isConnectingRef.current = true;
-    const socket = new WebSocket(`ws://localhost:5001?userId=${currentUserId}`);
+    const token = localStorage.getItem('token');
+    const ws = new WebSocket(`ws://localhost:5001?token=${token}`);
 
-    socket.onopen = () => {
+    ws.onopen = () => {
       console.log("WebSocket connected");
       isConnectingRef.current = false;
     };
 
-    socket.onmessage = (event) => {
+    ws.onmessage = (event) => {
       try {
         const data = JSON.parse(event.data);
         if (data.type === "message" && data.data) {
@@ -94,7 +95,7 @@ const Chat = () => {
       }
     };
 
-    socket.onerror = (error) => {
+    ws.onerror = (error) => {
       console.error("WebSocket error:", error);
       toast({
         title: "Connection Error",
@@ -103,13 +104,13 @@ const Chat = () => {
       });
     };
 
-    socket.onclose = () => {
+    ws.onclose = () => {
       console.log("WebSocket disconnected");
       isConnectingRef.current = false;
       setTimeout(connectWebSocket, 5000);
     };
 
-    wsRef.current = socket;
+    wsRef.current = ws;
   };
 
   const fetchMessages = async () => {

@@ -122,6 +122,12 @@ const getUsers = async (req, res) => {
       .select('_id fullName profilePicture email')
       .lean();
     
+    if (users && users._id) {
+        // safe to use user._id
+    } else {
+        // handle the case where user is null or _id is missing
+    }
+
     res.json(users);
   } catch (error) {
     console.error('Error in getUsers:', error);

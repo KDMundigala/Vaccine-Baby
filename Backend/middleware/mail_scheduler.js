@@ -110,7 +110,7 @@ const notifyMail = async () => {
 };
 
 
-cron.schedule('14 03 * * *', async () => {
+cron.schedule('36 18 * * *', async () => {
     console.log('Running scheduled notifications...');
     try {
         await notifyMail();
