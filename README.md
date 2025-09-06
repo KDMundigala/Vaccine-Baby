@@ -1,5 +1,5 @@
 🍼 Vaccine Baby  
-Vaccine Baby is a mobile-responsive web application developed by **Kasun Mundigala** as a Final Year Project. It helps parents (especially busy mothers and fathers in Sri Lanka) manage their child’s vaccination schedule, track growth milestones, and access trusted healthcare information — all in one platform.  
+Vaccine Baby is a mobile-responsive web application developed by **Kasun Mundigala** as a Final Year Project. It helps parents (especially busy mothers and fathers in Sri Lanka) manage their child’s vaccination schedule, track growth milestones, and access trusted healthcare information all in one platform.  
 
 🚀 Features  
 - 📅 **Vaccination Scheduling & Reminders** – Automated SMS and email notifications (Twilio & Nodemailer) to ensure timely vaccinations  
